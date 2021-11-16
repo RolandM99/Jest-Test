@@ -15,22 +15,55 @@ const elementToAdd = {
 };
 
 Tasks.myTasksView(elementToAdd, createList);
-
-describe('Add for exactly one element', () => {
-  test("Add exactly one 'li' element in the list", () => {
+describe('Test to add exactly one element ', () => {
+  test("Add exactly one 'li' element to the list of tasks", () => {
     expect(createList.childElementCount).toBe(1);
   });
 });
 
 Tasks.addTask(elementToAdd);
-describe('Test remove an add methods in the Tasks class', () => {
-  test('Add elements properties in the LocalStorage', () => {
+describe('Test part1: Test remove and add methods in the JavaScript Class Tasks', () => {
+  test('Add edited elements properties to LocalStorage', () => {
     expect(Tasks.getFromLocalStore()[0].task).toBe('Graduate from Microverse');
   });
-  test('Remove element from the DOM and from LocalStorage', () => {
+  test('Remove element from the DOM and from the localstorage', () => {
     const target = document.getElementById('1 trash');
     const childcount = createList.childElementCount;
     Tasks.deleteTask(target, 0);
+    expect(createList.childElementCount).toBeLessThan(childcount);
+  });
+});
+
+const editText = document.querySelector('textarea');
+describe('Test part2 : Edit tasks, Update and delete all completed', () => {
+  test('edit task with click event call', () => {
+    Tasks.myTasksView(elementToAdd, createList);
+    expect(editText.className).toBe('textarea hide');
+    const editTarget = document.querySelector('label');
+    const clickConfirm = document.querySelector('i');
+    editText.value = 'helllo';
+    editTarget.click((e) => {
+      Tasks.editTask(e);
+      clickConfirm.click();
+      expect(editTarget.innerText).toBe('helllo');
+    });
+  });
+  test('complete status update', () => {
+    Tasks.myTasksView(elementToAdd, createList);
+    Tasks.addTask(elementToAdd);
+    const checkbox = document.querySelector('input');
+    checkbox.checked = true;
+    Tasks.completedTaskStored(checkbox);
+    expect((Tasks.getFromLocalStore())[0].completed).toBe(true);
+  });
+  test('clear all completed tasks at once by click', () => {
+    Tasks.myTasksView(elementToAdd, createList);
+    Tasks.addTask(elementToAdd);
+    const checkbox = document.querySelector('input');
+    checkbox.checked = true;
+    Tasks.completedTaskStored(checkbox);
+    const childcount = createList.childElementCount;
+    Tasks.clearAllCompletedTasks();
     expect(createList.childElementCount).toBeLessThan(childcount);
   });
 });
