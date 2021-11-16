@@ -23,7 +23,7 @@ To get a local copy up and running follow these simple example steps.
 2. Then run the command `npm install` in your terminal to open the project in your browser
 3. run `npm start` for starting the project in your browser
 4. `npm run test` for testing the App
-2. [optional] You can even fork the project
+5. [optional] You can even fork the project
 
 👤 **Authour:** **Roland Manful Mweze**
 
