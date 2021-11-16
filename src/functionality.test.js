@@ -15,9 +15,10 @@ const elementToAdd = {
 };
 
 Tasks.myTasksView(elementToAdd, createList);
-
-test("Add exactly one 'li' element to the list of tasks", () => {
-  expect(createList.childElementCount).toBe(1);
+describe('Test to add exactly one element ', () => {
+  test("Add exactly one 'li' element to the list of tasks", () => {
+    expect(createList.childElementCount).toBe(1);
+  });
 });
 
 Tasks.addTask(elementToAdd);
@@ -30,9 +31,6 @@ describe('Test part1: Test remove and add methods in the JavaScript Class Tasks'
     const childcount = createList.childElementCount;
     Tasks.deleteTask(target, 0);
     expect(createList.childElementCount).toBeLessThan(childcount);
-  });
-  test('Add element to the DOM and to LocalStorage', () => {
-    expect(Tasks.getFromLocalStore()).toBeDefined();
   });
 });
 
